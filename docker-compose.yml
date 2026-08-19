@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: ./
+    command: python manage.py collectstatic
+    ports:
+      - "8000:8000"
+    volumes:
+      - static_volume:/home/devops/LMS-Education-system/static
+      - media_volume:/home/devops/LMS-Education-system/media
+    env_file:
+      - ./.env
+    restart: always
+
+  db:
+    image: python:3.8-slim
+    volumes:
+      - db_volume:/home/devops/LMS-Education-system/db.sqlite3
+
+volumes:
+  static_volume:
+  media_volume:
+  db_volume:
